@@ -1,55 +1,55 @@
 const express = require('express');
 const router = express.Router();
-// Créer une instance de categorie.
-const Scategorie = require('../models/scategorie');
-
+// Créer une instance de scategorie.
+const scategorie = require('../models/scategorie');
 
 // afficher la liste des scategories.
-router.get('/', async (req, res) => {
+router.get('/', async (req, res,) => {
     try {
-        const scat = await Scategorie.find()
-        return res.status(200).json(scat)
+        const cat = await scategorie.find()
+        return res.status(200).json(cat)
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
 });
-// créer une nouvelle scatégorie
-router.post("/", async (req, res) => {
-    const newScategorie = new Scategorie(req.body)
+// créer un nouvelle catégorie
+router.post('/', async (req, res) => {
+    const newscategorie = new scategorie(req.body)
     try {
-        await newScategorie.save();
-        res.status(200).json(newScategorie);
+        await newscategorie.save();
+        return res.status(200).json(newscategorie);
     } catch (error) {
-        res.status(404).json({ message: error.message });
+        res.status(404).json({ message: error.message })
     }
 });
-// chercher une scatégorie
+// chercher une catégorie
 router.get('/:scategorieId', async (req, res) => {
     try {
-        const scat = await Scategorie.findById(req.params.scategorieId);
-        res.status(200).json(scat);
+        const cat = await scategorie.findById(req.params.scategorieId);
+        return res.status(200).json(cat);
     } catch (error) {
-        res.status(404).json({ message: error.message });
+        res.status(404).json({ message: error.message })
     }
 });
-// Supprimer une scatégorie
-router.delete('/:scategorieId', async (req, res) => {
-    const id = req.params.scategorieId;
-    await Scategorie.findByIdAndDelete(id);
-    res.json({ message: "sous categorie deleted successfully." });
-});
-// modifier une scatégorie
+// modifier une catégorie
 router.put('/:scategorieId', async (req, res) => {
     try {
-        const scat1 = await Scategorie.findByIdAndUpdate(
-            req.params.scategorieId,
-            { $set: req.body },
-            { new: true }
-        );
-        res.status(200).json(scat1);
+        const cat1 = await scategorie.findByIdAndUpdate(req.params.scategorieId, { $set: req.body }, { new: true });
+        res.status(200).json(cat1);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
 });
+// Supprimer une catégorie
+router.delete('/:scategorieId', async (req, res) => {
+    try {
 
-module.exports = router
+
+        const id = req.params.scategorieId;
+        await scategorie.findByIdAndDelete(id);
+        res.json({ message: "scategorie deleted successfully" });
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+});
+module.exports = router;
